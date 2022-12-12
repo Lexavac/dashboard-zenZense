@@ -78,6 +78,29 @@
                         <button class="btn btn-primary py-1 px-2 mr-2">
                             <a href="https://www.tokopedia.com/" target="_blank">Store</a>
                         </button>
+
+                        @if($item->status == 1)
+
+                                        <div class="btn-group">
+                                            <a href="{{ route('up-status-user', ['user_id' => $item->id, 'status_code' => 0] ) }}" class="btn btn-danger" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                                            </a>
+                                        </div>
+
+                                        @else
+                                        
+                                        <div class="btn-group">
+                                            <a href="{{ route('up-status-user', ['user_id' => $item->id, 'status_code' => 1] ) }}" class="btn btn-success" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                            </a>
+                                        </div>
+
+                                        @endif
+
+
+
+
+
                         <button class="btn btn-outline-secondary py-1 px-2">
                             <a href="{{ route('show.seller', $item->id) }}">Detail</a>
                         </button>

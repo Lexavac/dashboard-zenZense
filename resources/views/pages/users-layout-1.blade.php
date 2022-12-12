@@ -7,7 +7,7 @@
 
 @section('subcontent')
     {{-- {{$cust}} --}}
-
+    @include('sweetalert::alert')
     <h2 class="intro-y text-lg font-medium mt-10">Customer List</h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
@@ -105,6 +105,29 @@
                             <td class="text-center">- Items</td>
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
+
+
+
+                                        @if($item->status == 1)
+
+                                        <div class="btn-group">
+                                            <a href="{{ route('up-status-user', ['user_id' => $item->id, 'status_code' => 0] ) }}" class="btn btn-danger" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                                            </a>
+                                        </div>
+                                        @else
+
+                                        <div class="btn-group">
+                                            <a href="{{ route('up-status-user', ['user_id' => $item->id, 'status_code' => 1] ) }}" class="btn btn-success" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                            </a>
+                                        </div>
+
+                                        @endif
+
+
+
+
                                     {{-- <a class="flex items-center mr-3" href="{{route('edit-cust')}}">
                                         <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit
                                     </a> --}}

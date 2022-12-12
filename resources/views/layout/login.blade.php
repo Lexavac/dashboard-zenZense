@@ -12,4 +12,5 @@
 
         @yield('script')
     </body>
+
 @endsection

@@ -27,6 +27,9 @@ License: You must have a valid license purchased only from themeforest(the above
 </head>
 <!-- END: Head -->
 
+@include('sweetalert::alert')
+
 @yield('body')
+
 
 </html>

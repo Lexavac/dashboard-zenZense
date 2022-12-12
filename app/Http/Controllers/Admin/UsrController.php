@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UsrController extends Controller
 {
@@ -16,15 +17,38 @@ class UsrController extends Controller
      */
     public function index()
     {
-        // $data = Users::all();
+        $user = User::all();
 
-        $data = User::select("*")
+        $cust = User::select("*")
                         ->where([
                             ["level", "Customer"],
                         ])
                         ->get();
 
-        return view('pages/users-layout-1', ['cust'=>$data]);
+        return view('pages/users-layout-1', compact('cust', 'user'));
+    }
+
+
+    public function updateStatus($user_id, $status_code)
+    {
+        try {
+
+           $update = User::whereId($user_id)->update([
+                'status' => $status_code,
+            ]);
+
+        if($update){
+
+                Alert::info('Success Title', 'Success Update Status');
+                return redirect()->route('users-layout-1');
+            }
+
+            Alert::info('Danger Title', 'Fail Suspend User');
+            return redirect()->route('users-layout-1');
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**

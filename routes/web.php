@@ -66,10 +66,10 @@ Route::middleware('auth')->group(function() {
         Route::get('/', 'index')->name('dashboard-overview-1');
     });
 
-    Route::controller(UsrController::class)->group(function() {
-        Route::get('customer-page', 'index')->name('users-layout-1');
-        // Route::delete('customer-delete/{id}', 'destroy')->name('delete-cust');
-    });
+    // Route::controller(UsrController::class)->group(function() {
+    //     Route::get('customer-page', 'index')->name('users-layout-1');
+    //     // Route::delete('customer-delete/{id}', 'destroy')->name('delete-cust');
+    // });
 
     Route::controller(SellerController::class)->group(function() {
         Route::get('seller-page', 'index')->name('seller-list');
@@ -100,3 +100,12 @@ Route::middleware('auth')->group(function() {
         Route::get('reviews-page', 'index')->name('reviews');
     });
 });
+
+Route::middleware('auth')->group(function () {
+
+    // USER
+    // Route::get('dashboard/admin', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
+    Route::get('customer-page', [App\Http\Controllers\Admin\UsrController::class, 'index'])->name('users-layout-1');
+    Route::get('admin/status/{user_id}/{status_code}', [App\Http\Controllers\Admin\UsrController::class, 'updateStatus'])->name('up-status-user');
+});
+
