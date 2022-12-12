@@ -61,63 +61,70 @@
                         <th class="whitespace-nowrap">
                             <input class="form-check-input" type="checkbox">
                         </th>
+                        {{-- <th class="whitespace-nowrap">ITEM</th> --}}
+                        <th class="whitespace-nowrap">USER</th>
                         <th class="whitespace-nowrap">INVOICE</th>
-                        <th class="whitespace-nowrap">BUYER NAME</th>
-                        <th class="whitespace-nowrap">PAYMENT</th>
                         <th class="text-right whitespace-nowrap">
-                            <div class="pr-16">TOTAL TRANSACTION</div>
+                            <div class="pr-16">PAYMENT</div>
                         </th>
+                        <th class="whitespace-nowrap">TOTAL</th>
                         <th class="text-center whitespace-nowrap">STATUS</th>
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (array_slice($fakers, 0, 5) as $faker)
+                    @foreach ( $trx as $faker)
                         <tr class="intro-x">
                             <td class="w-10">
                                 <input class="form-check-input" type="checkbox">
                             </td>
-                            <td class="w-40 !py-4">
-                                <a href="" class="underline decoration-dotted whitespace-nowrap">{{ '#INV-' . $faker['totals'][0] . '807556' }}</a>
-                            </td>
+
+                            {{-- <td class="w-40">
+                                <ul>
+                                    @foreach ($faker->Item as $item )
+                                    <li>
+                                        <a href="" class="font-medium whitespace-nowrap">{{ $item->product_name }}</a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </td> --}}
+
                             <td class="w-40">
-                                <a href="" class="font-medium whitespace-nowrap">{{ $faker['users'][0]['name'] }}</a>
-                                @if ($faker['true_false'][0])
+                                <a href="" class="font-medium whitespace-nowrap">{{ $faker->User->name }}</a>
+
                                     <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">Ohio, Ohio</div>
-                                @else
-                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">California, LA</div>
-                                @endif
+
                             </td>
+
+                            <td class="w-40 !py-4">
+                                <a href="" class="underline decoration-dotted whitespace-nowrap">{{ $faker->invoice_no}}</a>
+                            </td>
+
                             <td>
-                                @if ($faker['true_false'][0])
-                                    <div class="whitespace-nowrap">Direct bank transfer</div>
-                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">25 March, 12:55</div>
-                                @else
-                                    <div class="whitespace-nowrap">Checking payments</div>
-                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">30 March, 11:00</div>
-                                @endif
+
+                                    <div class="whitespace-nowrap">{{ $faker->payment_type }}</div>
+                                    <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ $faker->created_at }}</div>
+
                             </td>
                             <td class="w-40 text-right">
-                                <div class="pr-16">${{ $faker['totals'][0] . ',000,00' }}</div>
+                                <div class="pr-16">${{ $faker->total }}</div>
                             </td>
-                            
+
                             <td class="text-center">
-                                <div class="flex items-center justify-center whitespace-nowrap {{ $faker['true_false'][0] ? 'text-success' : 'text-pending' }}">
-                                    <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $faker['true_false'][0] ? 'Completed Order' :'Pending Payment' }}
+                                <div class="flex items-center justify-center whitespace-nowrap">
+                                    <i data-lucide="check-square" class="w-4 h-4 mr-2"></i>
+                                    {{ $faker->status }}
                                 </div>
                             </td>
+
                             <td class="table-report__action">
                                 <div class="flex justify-center items-center">
-                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="javascript:;">
+                                    <a class="flex items-center text-primary whitespace-nowrap mr-5" href="{{ route('trxDetail', $faker->id) }}" target="_">
                                         <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> View Details
                                     </a>
-                                    {{-- <a class="flex items-center text-primary whitespace-nowrap" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="arrow-left-right" class="w-4 h-4 mr-1"></i> Change Status
-                                    </a> --}}
-                                    
-                                    <a class="flex items-center text-primary whitespace-nowrap" href="{{ route('status') }}">
-                                        <i data-lucide="arrow-left-right" class="w-4 h-4 mr-1"></i> Change Status
-                                    </a>
+
+
+
                                 </div>
                             </td>
                         </tr>

@@ -6,6 +6,8 @@
 
 
 @section('subcontent')
+    {{-- {{ $seller }} --}}
+
     <h2 class="intro-y text-lg font-medium mt-10">Seller List</h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
@@ -40,16 +42,28 @@
             </div>
         </div>
         <!-- BEGIN: Users Layout -->
-        @foreach (array_slice($fakers, 0, 2) as $faker)
+        {{-- @foreach (array_slice($fakers, 0, 1) as $faker) --}}
+        @foreach ($seller as $item)
+        @if ($item->level == 'customer'  )
+
+        @else
+
             <div class="intro-y col-span-12 md:col-span-6">
                 <div class="box">
                     <div class="flex flex-col lg:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
                         <div class="w-24 h-24 lg:w-12 lg:h-12 image-fit lg:mr-1">
-                            <img alt="Midone - HTML Admin Template" class="rounded-full" src="{{ asset('build/assets/images/' . $faker['photos'][0]) }}">
+                            {{-- <img class="rounded-full" src=""> --}}
+                            @if(isset($item->Profiles->gallery))
+                            <img alt="Midone - HTML Admin Template" class="rounded-full" src="{{  $item->Profiles->gallery->first()->getUrl() }}">
+                            @else
+                            <div class="text-slate-500 text-xs mt-0.5"> No Image </div>
+                            @endif
                         </div>
                         <div class="lg:ml-2 lg:mr-auto text-center lg:text-left mt-3 lg:mt-0">
-                            <a href="" class="font-medium">{{ $faker['users'][0]['name'] }}</a>
-                            <div class="text-slate-500 text-xs mt-0.5">{{ $faker['jobs'][0] }}</div>
+                            <a href="" class="font-medium">{{ $item->name }}</a>
+
+                            <div class="text-slate-500 text-xs mt-0.5">{{ $item->level }}</div>
+
                         </div>
                         <div class="flex lg:ml-0 lg:justify-end mt-3 lg:mt-0">
                             <div>
@@ -65,11 +79,16 @@
                             <a href="https://www.tokopedia.com/" target="_blank">Store</a>
                         </button>
                         <button class="btn btn-outline-secondary py-1 px-2">
-                            <a href="{{ route('seller-detail') }}">Detail</a>
+                            <a href="{{ route('show.seller', $item->id) }}">Detail</a>
                         </button>
                     </div>
                 </div>
             </div>
+
+
+
+            @endif
+
         @endforeach
         <!-- END: Users Layout -->
         <!-- BEGIN: Pagination -->
@@ -113,12 +132,7 @@
                     </li>
                 </ul>
             </nav>
-            <select class="w-20 form-select box mt-3 sm:mt-0">
-                <option>10</option>
-                <option>25</option>
-                <option>35</option>
-                <option>50</option>
-            </select>
+
         </div>
         <!-- END: Pagination -->
     </div>

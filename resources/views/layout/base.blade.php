@@ -12,7 +12,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN: Head -->
 <head>
     <meta charset="utf-8">
-    <link href="{{ asset('build/assets/images/logo.svg') }}" rel="shortcut icon">
+    <link href="{{ asset('build/assets/images/logo1.png') }}" rel="shortcut icon">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tinker admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">

@@ -10,7 +10,7 @@
             <!-- BEGIN: Login Info -->
             <div class="hidden xl:flex flex-col min-h-screen">
                 <a href="" class="-intro-x flex items-center pt-5">
-                    <img alt="Icewall Tailwind HTML Admin Template" class="h-12" src="{{ asset('build/assets/images/logo1.png') }}">
+                    <img alt="Zenit" class="w-12" src="{{ asset('build/assets/images/logo1.png') }}">
                 </a>
                 <div class="my-auto">
                     <img alt="Icewall Tailwind HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="{{ asset('build/assets/images/tigan-bian.png') }}">

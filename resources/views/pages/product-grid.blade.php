@@ -5,11 +5,17 @@
 @endsection
 
 @section('subcontent')
-    <h2 class="intro-y text-lg font-medium mt-10">Product Grid</h2>
+
+
+    {{-- <p>{{$category}}</p> --}}
+
+
+
+    <h2 class="intro-y text-lg font-medium mt-10">Categories</h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
             <button class="btn btn-primary shadow-md mr-2">
-                <a href="{{ route('form-cat') }}">Add New Categories</a> 
+                <a href="{{ route('form-cat') }}">Add New Categories</a>
             </button>
             <div class="dropdown">
                 <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
@@ -46,36 +52,60 @@
             </div>
         </div>
         <!-- BEGIN: Users Layout -->
-        @foreach (array_slice($fakers, 0, 4) as $faker)
+        {{-- @foreach (array_slice($fakers, 0, 4) as $faker) --}}
+        @foreach ($category as $item)
             <div class="intro-y col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3">
                 <div class="box">
                     <div class="p-5">
-                        <div class="h-40 2xl:h-56 image-fit rounded-md overflow-hidden before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t before:from-black before:to-black/10">
+                        {{-- <div class="h-40 2xl:h-56 image-fit rounded-md overflow-hidden before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t">
                             <img alt="Midone - HTML Admin Template" class="rounded-md" src="{{ asset('build/assets/images/' . $faker['images'][0]) }}">
                             @if ($faker['true_false'][0])
                                 <span class="absolute top-0 bg-pending/80 text-white text-xs m-5 px-2 py-1 rounded z-10">Featured</span>
                             @endif
+
+                                @if($item -> photo)
+                                    <div style="display: flex; margin-top: 10px; justify-content: center; align-items: center;">
+                                        <a href="{{ $item->photo->getUrl() }}" target="_blank">
+                                            <img src="{{ $item->photo->getUrl() }}" width="200px" height="350px">
+                                        </a>
+                                    </div>
+                                @else
+                                    <span class="badge badge-warning">No Image</span>
+                                @endif
+
                             <div class="absolute bottom-0 text-white px-5 pb-6 z-10">
-                                <a href="" class="block font-medium text-base">{{ $faker['products'][0]['name'] }}</a>
-                                <span class="text-white/90 text-xs mt-3">{{ $faker['products'][0]['category'] }}</span>
+                                <a href="" class="block font-medium text-base"{{ $item->name }}</a>
+                                <span class="text-white/90 text-xs mt-3">{{ $item->name }}</span>
                             </div>
-                        </div>
+                        </div> --}}
+
+
                         <div class="text-slate-600 dark:text-slate-500 mt-5">
-                            <div class="flex items-center mt-2">
-                                <i data-lucide="layers" class="w-4 h-4 mr-2"></i> Remaining Stock: {{ $faker['stocks'][0] }}
+                            <div class="flex items-center mt-2" style="display:flex; justify-content: center; align-items: center;">
+                                {{-- <i data-lucide="layers" class="w-4 h-4 mr-2"></i> Remaining Stock:  --}}
+                                {{-- {{ $faker['stocks'][0] }} --}}
+
+                                <h1 style="font-size:25px; font-weight:bold; display:flex; justify-content: center; align-items: center;">{{ $item->name }}</h1>
+
+                                {{-- <i data-lucide="layers" class="w-4 h-4 mr-2"></i>   --}}
                             </div>
-                            <div class="flex items-center mt-2">
-                                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> Status: {{ $faker['true_false'][0] ? 'Active' : 'Inactive' }}
+                            <div class="flex items-center mt-4" style="font-weight:bold;">
+                                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> Status: Active
+                                {{-- {{ $faker['true_false'][0] ? 'Active' : 'Inactive' }} --}}
                             </div>
                         </div>
                     </div>
                     <div class="flex justify-center lg:justify-end items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-                        <a class="flex items-center text-primary mr-auto" href="javascript:;">
-                            <i data-lucide="eye" class="w-4 h-4 mr-1"></i> Preview
-                        </a>
-                        <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                            <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Delete
-                        </a>
+
+                        {{-- <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+
+                        </a> --}}
+
+                        <form onclick="return confirm('are you sure ?');" action="{{ route('delete-cate', $item->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger" ><i data-lucide="trash-2" class="w-4 h-4"></i> </button>
+                        </form>
                     </div>
                 </div>
             </div>

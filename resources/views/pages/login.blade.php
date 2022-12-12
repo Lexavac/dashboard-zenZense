@@ -10,7 +10,7 @@
             <!-- BEGIN: Login Info -->
             <div class="hidden xl:flex flex-col min-h-screen">
                 <a href="" class="-intro-x flex items-center pt-5">
-                    <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('build/assets/images/logo.svg') }}">
+                    <img alt="Midone - HTML Admin Template" class="h-8" src="{{ asset('build/assets/images/logo.svg') }}">
                     <span class="text-white text-lg ml-3">
                         ZENIT
                     </span>

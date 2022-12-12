@@ -5,6 +5,8 @@
 @endsection
 
 @section('subcontent')
+
+{{-- {{$rate}} --}}
     <h2 class="intro-y text-lg font-medium mt-10">Reviews</h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap xl:flex-nowrap items-center mt-2">
@@ -61,13 +63,13 @@
                         <th class="whitespace-nowrap">PRODUCT</th>
                         <th class="whitespace-nowrap">NAME</th>
                         <th class="whitespace-nowrap">RATING</th>
-                        <th class="text-center whitespace-nowrap">POSTED TIME</th>
-                        <th class="text-center whitespace-nowrap">STATUS</th>
+                        <th class="text-center whitespace-nowrap">COMMENT</th>
+                        <th class="text-center whitespace-nowrap">CREATED</th>
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (array_slice($fakers, 0, 5) as $faker)
+                    @foreach ($rate as $item)
                         <tr class="intro-x">
                             <td class="w-10">
                                 <input class="form-check-input" type="checkbox">
@@ -75,13 +77,13 @@
                             <td class="!py-4">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 image-fit zoom-in">
-                                        <img alt="Midone - HTML Admin Template" class="rounded-lg border-1 border-white shadow-md tooltip" src="{{ asset('build/assets/images/' . $faker['images'][0]) }}" title="Uploaded at {{ $faker['dates'][0] }}">
+                                        <img alt="Midone - HTML Admin Template" class="rounded-lg border-1 border-white shadow-md tooltip" src="{{ $item->Product->getMedia('gallery')->first()->getUrl() }}">
                                     </div>
-                                    <a href="" class="font-medium whitespace-nowrap ml-4">{{ $faker['products'][0]['name'] }}</a>
+                                    <a href="" class="font-medium whitespace-nowrap ml-4">{{$item->product->name}}</a>
                                 </div>
                             </td>
                             <td class="whitespace-nowrap">
-                                <a class="flex items-center underline decoration-dotted" href="javascript:;">{{ $faker['users'][0]['name'] }}</a>
+                                <a class="flex items-center underline decoration-dotted" href="javascript:;">{{$item->user->name}}</a>
                             </td>
                             <td class="text-center">
                                 <div class="flex items-center">
@@ -90,21 +92,23 @@
                                         <i data-lucide="star" class="text-pending fill-pending/30 w-4 h-4 mr-1"></i>
                                         <i data-lucide="star" class="text-pending fill-pending/30 w-4 h-4 mr-1"></i>
                                         <i data-lucide="star" class="text-pending fill-pending/30 w-4 h-4 mr-1"></i>
-                                        <i data-lucide="star" class="text-slate-400 fill-slate/30 w-4 h-4 mr-1"></i>
+                                        <i data-lucide="star" class="text-pending fill-pending/30 w-4 h-4 mr-1"></i>
+                                        {{-- <i data-lucide="star" class="text-slate-400 fill-slate/30 w-4 h-4 mr-1"></i> --}}
                                     </div>
-                                    <div class="text-xs text-slate-500 ml-1">(4.5+)</div>
+                                    <div class="text-xs text-slate-500 ml-1">({{$item->stars_rated}})</div>
                                 </div>
                             </td>
-                            <td class="text-center whitespace-nowrap">{{ $faker['formatted_times'][0] }}</td>
-                            <td class="w-40">
-                                <div class="flex items-center justify-center {{ $faker['true_false'][0] ? 'text-success' : 'text-danger' }}">
-                                    <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $faker['true_false'][0] ? 'Active' : 'Removed' }}
+                            <td class="text-center whitespace-nowrap">{{$item->comment}}</td>
+                            <td class="w-50">
+                                <div class="flex items-center justify-center">
+                                    {{-- <i data-lucide="check-square" class="w-4 h-4 mr-2"></i>  --}}
+                                    {{$item->created_at}}
                                 </div>
                             </td>
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
                                     <a class="flex items-center text-primary whitespace-nowrap" href="" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
-                                        <i data-lucide="arrow-left-right" class="w-4 h-4 mr-1"></i> Change Status
+                                        <i data-lucide="trash" class="w-4 h-4 mr-1"></i> Delete Review
                                     </a>
                                 </div>
                             </td>

@@ -5,6 +5,13 @@
 @endsection
 
 @section('subcontent')
+    {{-- {{ $seller->products }} --}}
+
+    {{-- @foreach ($seller->products as $barang)
+        {{ $barang->name }}
+        {{ $barang->category->name }}
+    @endforeach --}}
+
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
         <h2 class="text-lg font-medium mr-auto">Seller Details</h2>
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
@@ -61,25 +68,25 @@
             <div class="box p-5 rounded-md mt-5">
                 <div class="font-medium text-center truncate dark:border-darkmode-400 pb-5 mb-5">Store Details</div>
                 <div class="flex items-center">
-                    <i data-lucide="clipboard" class="w-4 h-4 text-slate-500 mr-2"></i> 
-                    <a href="">STR-2053411933-20220217</a>
+                    <i data-lucide="clipboard" class="w-4 h-4 text-slate-500 mr-2"></i>
+                    <a href="">{{ $seller->created_at }}</a>
                 </div>
                 <div class="flex items-center mt-3">
-                    <i data-lucide="shopping-bag" class="w-4 h-4 text-slate-500 mr-2"></i> 
-                    <a href="">Themeforest</a>
+                    <i data-lucide="shopping-bag" class="w-4 h-4 text-slate-500 mr-2"></i>
+                    <a href="">{{ $seller->name }}</a>
                 </div>
                 <div title="phone number" class="flex items-center mt-3">
-                    <i data-lucide="phone" class="w-4 h-4 text-slate-500 mr-2"></i> 
-                    <p>+71828273732</p>
+                    <i data-lucide="phone" class="w-4 h-4 text-slate-500 mr-2"></i>
+                    <p>{{ $seller->email }}</p>
                 </div>
                 <div class="flex items-center mt-3">
-                    <i data-lucide="map-pin" class="w-4 h-4 text-slate-500 mr-2"></i> 
+                    <i data-lucide="monitor" class="w-4 h-4 text-slate-500 mr-2"></i>
                     <div class="">
-                        260 W. Storm Street New York, NY 10025.
+                        {{ $seller->level }}
                     </div>
                 </div>
                 <div class="flex items-center mt-3">
-                    <i data-lucide="toggle-left" class="w-4 h-4 text-slate-500 mr-2"></i> 
+                    <i data-lucide="toggle-left" class="w-4 h-4 text-slate-500 mr-2"></i>
                     <span class="bg-success/20 text-success rounded px-2 ml-1">Active</span>
                 </div>
                 <div class="flex items-center border-t border-slate-200/60 dark:border-darkmode-400 pt-5 mt-5 font-medium">
@@ -93,7 +100,7 @@
                     </button>
                 </div>
             </div>
-            <div class="box p-5 rounded-md mt-5">
+            {{-- <div class="box p-5 rounded-md mt-5">
                 <div class="font-medium text-center truncate dark:border-darkmode-400 pb-5 mb-5">Transaction Reports</div>
                 <div class="flex items-center mt-3">
                     <i data-lucide="clipboard" class="w-4 h-4 text-slate-500 mr-2"></i> Avg. Daily Transactions: <div class="ml-auto">$1,500.00</div>
@@ -113,46 +120,49 @@
                 <div class="flex items-center mt-3">
                     <i data-lucide="archive" class="w-4 h-4 text-slate-500 mr-2"></i> Total Transactions: <div class="ml-auto">1.512.001</div>
                 </div>
-            </div>
+            </div> --}}
 
             <button class="btn btn-primary shadow-md mt-4 mr-2">
                 <a href="{{ route('seller-list') }}">Back</a>
             </button>
+
+            <button class="btn btn-primary shadow-md mt-4 mr-2">
+                <a href="{{ route('seller-list') }}">Save Change</a>
+            </button>
         </div>
         <div class="col-span-12 lg:col-span-7 2xl:col-span-8">
             <div class="grid grid-cols-12 gap-5">
-                @foreach (array_slice($fakers, 0, 6) as $faker)
+                {{-- @foreach (array_slice($fakers, 0, 6) as $faker) --}}
+                @foreach ($seller->products as $item)
                     <div class="intro-y col-span-12 sm:col-span-6 2xl:col-span-4">
                         <div class="box">
                             <div class="p-5">
                                 <div class="h-40 2xl:h-56 image-fit rounded-md overflow-hidden before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t before:from-black before:to-black/10">
-                                    <img alt="Midone - HTML Admin Template" class="rounded-md" src="{{ asset('build/assets/images/' . $faker['images'][0]) }}">
-                                    @if ($faker['true_false'][0])
-                                        <span class="absolute top-0 bg-pending/80 text-white text-xs m-5 px-2 py-1 rounded z-10">Featured</span>
-                                    @endif
+                                    <img alt="Midone - HTML Admin Template" class="rounded-md" src=" {{ $item->gallery->first()->getUrl() }} ">
+                                        <span class="absolute top-0 bg-pending/80 text-white text-xs m-5 px-2 py-1 rounded z-10">{{ $item->category->name }}</span>
                                     <div class="absolute bottom-0 text-white px-5 pb-6 z-10">
-                                        <a href="" class="block font-medium text-base">{{ $faker['products'][0]['name'] }}</a>
-                                        <span class="text-white/90 text-xs mt-3">{{ $faker['products'][0]['category'] }}</span>
+                                        <a href="" class="block font-medium text-base">{{ $item->name }}</a>
+                                        {{-- <span class="text-white/90 text-xs mt-3"></span> --}}
                                     </div>
                                 </div>
                                 <div class="text-slate-600 dark:text-slate-500 mt-5">
                                     <div class="flex items-center">
-                                        <i data-lucide="link" class="w-4 h-4 mr-2"></i> Price: ${{ $faker['totals'][0] }}
+                                        <i data-lucide="link" class="w-4 h-4 mr-2"></i> Price: ${{ $item->price }}
                                     </div>
                                     <div class="flex items-center mt-2">
-                                        <i data-lucide="layers" class="w-4 h-4 mr-2"></i> Remaining Stock: {{ $faker['stocks'][0] }}
+                                        <i data-lucide="layers" class="w-4 h-4 mr-2"></i> Remaining Stock: {{ $item->quantity }}
                                     </div>
-                                    <div class="flex items-center mt-2">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> Status: {{ $faker['true_false'][0] ? 'Active' : 'Inactive' }}
-                                    </div>
+                                    {{-- <div class="flex items-center mt-2">
+                                        <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> Status: Active
+                                    </div> --}}
                                 </div>
                             </div>
                             <center>
-                                <div class="flex justify-center lg:justify-end items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
+                                {{-- <div class="flex justify-center lg:justify-end items-center p-5 border-t border-slate-200/60 dark:border-darkmode-400">
                                     <a class="flex items-center text-primary mr-auto" href="javascript:;">
                                         <i data-lucide="eye" class="w-4 h-4 mr-1"></i> Preview
                                     </a>
-                                </div>
+                                </div> --}}
                             </center>
                         </div>
                     </div>

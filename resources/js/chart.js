@@ -104,21 +104,18 @@ import Chart from "chart.js/auto";
             type: "pie",
             data: {
                 labels: [
-                    "31 - 50 Years old",
-                    ">= 50 Years old",
-                    "17 - 30 Years old",
+                    "Software",
+                    "Hardware",
                 ],
                 datasets: [
                     {
-                        data: [15, 10, 65],
+                        data: [25, 75],
                         backgroundColor: [
                             colors.pending(0.9),
-                            colors.warning(0.9),
                             colors.primary(0.9),
                         ],
                         hoverBackgroundColor: [
                             colors.pending(0.9),
-                            colors.warning(0.9),
                             colors.primary(0.9),
                         ],
                         borderWidth: 5,

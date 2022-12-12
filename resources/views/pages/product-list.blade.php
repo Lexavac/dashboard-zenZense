@@ -5,8 +5,12 @@
 @endsection
 
 @section('subcontent')
+
+    {{-- <p>{{$products}}</p> --}}
+
+
     <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-        <h2 class="ol-span-6 intro-y text-lg font-medium mt-10">Product List</h2>
+        <h2 class="ol-span-6 intro-y text-lg font-medium mt-10 ">Product List</h2>
         <div style="margin-top:50px; margin-left:900px;" class="w-56 ml-[900px] mt-[-20px] relative text-slate-500">
             <input type="text" class="form-control w-56 box pr-10" placeholder="Search...">
             <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-lucide="search"></i>
@@ -20,47 +24,54 @@
                     <tr>
                         <th class="whitespace-nowrap">IMAGES</th>
                         <th class="whitespace-nowrap">PRODUCT NAME</th>
-                        <th class="text-center whitespace-nowrap">STOCK</th>
+                        <th class="text-center whitespace-nowrap">QUANTITY</th>
                         <th class="text-center whitespace-nowrap">PRICE</th>
                         <th class="text-center whitespace-nowrap">STATUS</th>
+                        {{-- <th class="text-center whitespace-nowrap">DESC</th> --}}
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (array_slice($fakers, 0, 5) as $faker)
+                    {{-- @foreach (array_slice($fakers, 0, 5) as $faker) --}}
+                    @foreach ($products as $item)
                         <tr class="intro-x">
                             <td class="w-40">
                                 <div class="flex">
                                     <div class="w-10 h-10 image-fit zoom-in">
-                                        <img alt="Midone - HTML Admin Template" class="tooltip rounded-full" src="{{ asset('build/assets/images/' . $faker['images'][0]) }}" title="Uploaded at {{ $faker['dates'][0] }}">
-                                    </div>
-                                    <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                        <img alt="Midone - HTML Admin Template" class="tooltip rounded-full" src="{{ asset('build/assets/images/' . $faker['images'][1]) }}" title="Uploaded at {{ $faker['dates'][0] }}">
-                                    </div>
-                                    <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                        <img alt="Midone - HTML Admin Template" class="tooltip rounded-full" src="{{ asset('build/assets/images/' . $faker['images'][2]) }}" title="Uploaded at {{ $faker['dates'][0] }}">
+                                       @if(count($item->gallery)  > 0)
+                                        <a href="{{ $item->getMedia('gallery')->first()->getUrl() }}" target="_blank">
+                                            <img src="{{ $item->getMedia('gallery')->first()->getUrl() }}" width="75px" height="50px" alt="">
+                                        </a>
+                                        @else
+                                            <span class="badge badge-warning">No Image</span>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
+
                             <td>
-                                <a href="" class="font-medium whitespace-nowrap">{{ $faker['products'][0]['name'] }}</a>
-                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ $faker['products'][0]['category'] }}</div>
+                                <a href="" class="font-medium whitespace-nowrap">{{ $item->name }}</a>
+                                <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">{{ $item->Category->name }}</div>
                             </td>
-                            <td class="text-center">{{ $faker['stocks'][0] }}</td>
-                            <td class="text-center">${{ $faker['totals'][0] }}</td>
+                            <td class="text-center">{{ $item->quantity }}</td>
+                            <td class="text-center">{{ $item->price }}</td>
                             <td class="w-40">
-                                <div class="flex items-center justify-center {{ $faker['true_false'][0] ? 'text-success' : 'text-danger' }}">
+                                {{-- <div class="flex items-center justify-center {{ $faker['true_false'][0] ? 'text-success' : 'text-danger' }}">
                                     <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> {{ $faker['true_false'][0] ? 'Active' : 'Inactive' }}
-                                </div>
+                                </div> --}}
+
+                                <p class="text-center text-success"> active </p>
                             </td>
+
+
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
-                                    <a class="flex items-center mr-3" href="{{ route('edit-pro') }}">
-                                        <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit
+                                    <a class="text-warning flex items-center mr-3" href="{{ route('edit-pro') }}">
+                                        <i data-lucide="check-square" class="text-warning w-4 h-4 mr-1"></i> Edit
                                     </a>
-                                    <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
+                                    {{-- <a class="flex items-center text-danger" href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal">
                                         <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Delete
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </td>
                         </tr>

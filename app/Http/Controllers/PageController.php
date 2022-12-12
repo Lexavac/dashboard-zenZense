@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use PDF;
+use Dompdf\Canvas;
 use App\Http\Controllers\Controller;
+// use Barryvdh\DomPDF\Facade as PDF;
 
 class PageController extends Controller
 {
@@ -123,7 +125,7 @@ class PageController extends Controller
     }
 
 
-    
+
     /**
      * Show specified view.
      *
@@ -277,7 +279,7 @@ class PageController extends Controller
     {
         return view('pages/edit-product');
     }
-    
+
     /**
      * Show specified view.
      *
@@ -860,4 +862,27 @@ class PageController extends Controller
     {
         return view('pages/image-zoom');
     }
+
+
+    /**
+     * Show specified view.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function invo()
+    {
+        return view('pages/invoice');
+    }
+
+    // public function cetak_pdf()
+    // {
+    // 	// $pegawai = Pegawai::all();
+
+    // 	// $pdf = PDF::loadview('invoice_pdf',['pegawai'=>$pegawai]);
+    //     $pdf = PDF::loadview('pages/invoice_pdf');
+
+    //     $pdf->setPaper([0, 0, 1123, 794], 'landscape');
+    // 	return $pdf->download('invoice.pdf');
+    // }
 }

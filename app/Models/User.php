@@ -42,24 +42,56 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The attributes that appends to returned entities.
-     *
-     * @var array
-     */
-    protected $appends = ['photo'];
+    // /**
+    //  * The attributes that appends to returned entities.
+    //  *
+    //  * @var array
+    //  */
+    // protected $appends = ['photo'];
 
     /**
      * The getter that return accessible URL for user photo.
      *
      * @var array
      */
-    public function getPhotoUrlAttribute()
-    {
-        if ($this->foto !== null) {
-            return url('media/user/' . $this->id . '/' . $this->foto);
-        } else {
-            return url('media-example/no-image.png');
-        }
+    // public function getPhotoUrlAttribute()
+    // {
+    //     if ($this->foto !== null) {
+    //         return url('media/user/' . $this->id . '/' . $this->foto);
+    //     } else {
+    //         return url('media-example/no-image.png');
+    //     }
+    // }
+
+    public function Profiles(){
+        return $this->hasOne(Profile::class, 'user_id');
     }
+
+    public function shop(){
+        return $this->hasOne(ShopProfile::class, 'users_id');
+    }
+
+    public function products(){
+        return $this->hasMany(Product::class, 'users_id');
+    }
+
+    public function carts(){
+        return $this->hasMany(Cart::class, 'users_id');
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class, 'users_id');
+    }
+
+    public function favorites(){
+        return $this->hasMany(Favorite::class, 'users_id');
+    }
+
+
+
+    public function getGalleryAttribute()
+    {
+        return $this->getMedia('gallery');
+    }
+
 }
